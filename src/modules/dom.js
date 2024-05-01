@@ -5,10 +5,39 @@ function generateChessboard() {
     // Identify the main container
     const container = document.getElementById('main-container');
     // Chessboard container
-    const chessBoard = document.createElement('div');
-    chessBoard.id = 'chessboard-container';
+    const chessBoardContainer = document.createElement('div');
+    chessBoardContainer.id = 'chessboard-container';
+    // Create the initial 8x8 chessboard
+    const tiles = 8;
+    const tileSize = 50;
+    // Prepare board SVG
+    const board = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    board.setAttribute('width', tiles * tileSize);
+    board.setAttribute('height', tiles * tileSize);
+    board.setAttribute('border', '1px solid red');
+    // Iterate through board rows
+    for (let i = 0; i < tiles; i += 1) {
+        // Iterate through the board columns
+        for (let j = 0; j < tiles; j += 1) {
+            // Create the tile
+            const tile = document.createElementNS(
+                'http://www.w3.org/2000/svg',
+                'rect',
+            );
+            // Set tile attributes (i.e., x, y, width, height, fill color)
+            tile.setAttribute('x', i * tileSize);
+            tile.setAttribute('y', j * tileSize);
+            tile.setAttribute('width', tileSize);
+            tile.setAttribute('height', tileSize);
+            tile.setAttribute('fill', (i + j) % 2 === 0 ? 'white' : 'black');
+            tile.classList.add('tile');
+            board.appendChild(tile);
+        }
+    }
+    chessBoardContainer.appendChild(board);
+
     // Append the chessboard to the container
-    container.appendChild(chessBoard);
+    container.appendChild(chessBoardContainer);
 }
 
 export function generateHeader() {
@@ -36,6 +65,7 @@ export function generateMain() {
 
     // Make sidebar container for input fields
     const sideContainer = document.createElement('div');
+    sideContainer.id = 'side-container';
 
     // Chessboard size: Container
     const chessboardSize = document.createElement('div');
@@ -86,15 +116,21 @@ export function generateMain() {
     endContainer.appendChild(endInput);
     sideContainer.appendChild(endContainer);
 
+    // Update display button
+    const updateButton = document.createElement('button');
+    updateButton.id = 'update-button';
+    updateButton.textContent = 'Update Chessboard Display';
+    sideContainer.appendChild(updateButton);
+
     // Calculate path button
     const pathButton = document.createElement('button');
     pathButton.id = 'calculate-path';
     pathButton.textContent = 'Calculate Path';
     sideContainer.appendChild(pathButton);
 
-    // Modular call to create the chessboard graph
-    generateChessboard();
-
     // Append all container elements to the main container
     container.appendChild(sideContainer);
+
+    // Modular call to create the chessboard graph
+    generateChessboard();
 }

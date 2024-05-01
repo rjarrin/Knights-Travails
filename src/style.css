@@ -17,12 +17,44 @@ body {
     padding: 10px;
 }
 
-
 #logo-image {
     width: 105px;
     height: 105px;
     border-radius: 50%;
     margin: 5px;
+}
+
+#main-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#side-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 500px;
+}
+
+#side-container div {
+    display: flex;
+    margin: 10px
+}
+
+#side-container button {
+    justify-content: center;
+    width: 50%;
+    margin: 10px;
+}
+
+#side-container div label {
+    /* margin-right: auto; */
+}
+
+#side-container div input {
+    margin-left: auto;
+    margin-left: 5px;
 }
 
 footer {
@@ -35,3 +67,4 @@ footer {
     justify-content: center;
     font-size: smaller;
 }
+
