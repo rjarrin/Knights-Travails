@@ -106,6 +106,7 @@ export function generateMain() {
     sizeInput.id = 'size-input';
     sizeInput.type = 'number';
     sizeInput.min = '1';
+    sizeInput.max = '8';
     sizeInput.placeholder = 'Enter chessboard size (e.g., 8)';
     // Append 'Chessboard size' elements to side container
     chessboardSize.appendChild(sizeLabel);
