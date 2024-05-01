@@ -14,7 +14,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    height: 20vh;
+    border: 1px solid red;
 }
 
 #logo-image {
@@ -27,34 +28,36 @@ body {
 #main-container {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    height: 60vh;
 }
 
 #side-container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 500px;
+    width: 410px;
+    margin-right: 85px;
 }
 
 #side-container div {
     display: flex;
-    margin: 10px
+    margin: 10px;
+    justify-content: space-between;
+
 }
 
 #side-container button {
     justify-content: center;
-    width: 50%;
+    width: 60%;
     margin: 10px;
-}
-
-#side-container div label {
-    /* margin-right: auto; */
+    height: 40px;
 }
 
 #side-container div input {
     margin-left: auto;
     margin-left: 5px;
+    width: 16vw;
 }
 
 footer {
@@ -66,5 +69,6 @@ footer {
     align-items: center;
     justify-content: center;
     font-size: smaller;
+    height: 10vh;
 }
 

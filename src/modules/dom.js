@@ -1,5 +1,30 @@
 import '../style.css';
 import logoImage from '../images/pixel_logo.png';
+import knightSVG from '../images/chess-knight.svg';
+
+function placeKnight(i, j, tileSize) {
+    // Initial knight placement will be 0,0
+    const board = document.getElementById('chessboard-svg');
+    const knight = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'image',
+    );
+    knight.setAttributeNS('http://www.w3.org/1999/xlink', 'href', knightSVG);
+    knight.setAttribute('x', i * tileSize);
+    knight.setAttribute('y', j * tileSize);
+    knight.setAttribute('width', tileSize);
+    knight.setAttribute('height', tileSize);
+    // Determine the color of the square the knight is on
+    const squareColor = (i + j) % 2 === 0 ? 'white' : 'black';
+    // Apply the correct filter based on the square color
+    knight.setAttribute(
+        'filter',
+        squareColor === 'black'
+            ? 'brightness(0) saturate(100%) invert(98%) sepia(100%) saturate(7%) hue-rotate(184deg) brightness(104%) contrast(102%)'
+            : 'brightness(0) saturate(100%) invert(0%) sepia(93%) saturate(0%) hue-rotate(199deg) brightness(95%) contrast(105%)',
+    );
+    board.appendChild(knight);
+}
 
 function generateChessboard() {
     // Identify the main container
@@ -14,7 +39,7 @@ function generateChessboard() {
     const board = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     board.setAttribute('width', tiles * tileSize);
     board.setAttribute('height', tiles * tileSize);
-    board.setAttribute('border', '1px solid red');
+    board.id = 'chessboard-svg';
     // Iterate through board rows
     for (let i = 0; i < tiles; i += 1) {
         // Iterate through the board columns
@@ -38,6 +63,9 @@ function generateChessboard() {
 
     // Append the chessboard to the container
     container.appendChild(chessBoardContainer);
+
+    // Place the knight image on the board
+    placeKnight(0, 1, tileSize);
 }
 
 export function generateHeader() {
