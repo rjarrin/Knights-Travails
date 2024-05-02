@@ -2,7 +2,7 @@ import '../style.css';
 import logoImage from '../images/pixel_logo.png';
 import knightSVG from '../images/chess-knight.svg';
 
-function placeKnight(i, j, tileSize) {
+export function placeKnight(i, j, tileSize) {
     // Initial knight placement will be 0,0
     const board = document.getElementById('chessboard-svg');
     const knight = document.createElementNS(
@@ -26,15 +26,19 @@ function placeKnight(i, j, tileSize) {
     board.appendChild(knight);
 }
 
-function generateChessboard() {
+export function generateChessboard(tiles, tileSize) {
     // Identify the main container
     const container = document.getElementById('main-container');
+    // Check if the chessboard container already exists and remove it
+    const existingChessboardContainer = document.getElementById(
+        'chessboard-container',
+    );
+    if (existingChessboardContainer) {
+        container.removeChild(existingChessboardContainer);
+    }
     // Chessboard container
     const chessBoardContainer = document.createElement('div');
     chessBoardContainer.id = 'chessboard-container';
-    // Create the initial 8x8 chessboard
-    const tiles = 8;
-    const tileSize = 50;
     // Prepare board SVG
     const board = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     board.setAttribute('width', tiles * tileSize);
@@ -63,9 +67,6 @@ function generateChessboard() {
 
     // Append the chessboard to the container
     container.appendChild(chessBoardContainer);
-
-    // Place the knight image on the board
-    placeKnight(0, 1, tileSize);
 }
 
 export function generateHeader() {
@@ -160,6 +161,10 @@ export function generateMain() {
     // Append all container elements to the main container
     container.appendChild(sideContainer);
 
-    // Modular call to create the chessboard graph
-    generateChessboard();
+    // Modular call to create the chessboard graph (init: 8x8)
+    const tiles = 8;
+    const tileSize = 50;
+    generateChessboard(tiles, tileSize);
+    // Place the knight image on the board (init: P(0,1))
+    placeKnight(0, 0, tileSize);
 }
