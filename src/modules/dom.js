@@ -1,8 +1,11 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/no-named-as-default-member */
 import '../style.css';
 import logoImage from '../images/pixel_logo.png';
 import knightSVG from '../images/chess-knight.svg';
+import chessboard from './index';
 
-export function placeKnight(i, j, tileSize) {
+export function placeKnight() {
     // Initial knight placement will be 0,0
     const board = document.getElementById('chessboard-svg');
     const knight = document.createElementNS(
@@ -10,12 +13,12 @@ export function placeKnight(i, j, tileSize) {
         'image',
     );
     knight.setAttributeNS('http://www.w3.org/1999/xlink', 'href', knightSVG);
-    knight.setAttribute('x', i * tileSize);
-    knight.setAttribute('y', j * tileSize);
-    knight.setAttribute('width', tileSize);
-    knight.setAttribute('height', tileSize);
+    knight.setAttribute('x', chessboard.knightPosX * chessboard.tilePixels);
+    knight.setAttribute('y', chessboard.knightPosY * chessboard.tilePixels);
+    knight.setAttribute('width', chessboard.tilePixels);
+    knight.setAttribute('height', chessboard.tilePixels);
     // Determine the color of the square the knight is on
-    const squareColor = (i + j) % 2 === 0 ? 'white' : 'black';
+    const squareColor = (chessboard.knightPosX + chessboard.knightPosY) % 2 === 0 ? 'white' : 'black';
     // Apply the correct filter based on the square color
     knight.setAttribute(
         'filter',
@@ -26,7 +29,7 @@ export function placeKnight(i, j, tileSize) {
     board.appendChild(knight);
 }
 
-export function generateChessboard(tiles, tileSize) {
+export function generateChessboard() {
     // Identify the main container
     const container = document.getElementById('main-container');
     // Check if the chessboard container already exists and remove it
@@ -41,23 +44,23 @@ export function generateChessboard(tiles, tileSize) {
     chessBoardContainer.id = 'chessboard-container';
     // Prepare board SVG
     const board = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    board.setAttribute('width', tiles * tileSize);
-    board.setAttribute('height', tiles * tileSize);
+    board.setAttribute('width', chessboard.tilesPerRow * chessboard.tilePixels);
+    board.setAttribute('height', chessboard.tilesPerRow * chessboard.tilePixels);
     board.id = 'chessboard-svg';
     // Iterate through board rows
-    for (let i = 0; i < tiles; i += 1) {
+    for (let i = 0; i < chessboard.tilesPerRow; i += 1) {
         // Iterate through the board columns
-        for (let j = 0; j < tiles; j += 1) {
+        for (let j = 0; j < chessboard.tilesPerRow; j += 1) {
             // Create the tile
             const tile = document.createElementNS(
                 'http://www.w3.org/2000/svg',
                 'rect',
             );
             // Set tile attributes (i.e., x, y, width, height, fill color)
-            tile.setAttribute('x', i * tileSize);
-            tile.setAttribute('y', j * tileSize);
-            tile.setAttribute('width', tileSize);
-            tile.setAttribute('height', tileSize);
+            tile.setAttribute('x', i * chessboard.tilePixels);
+            tile.setAttribute('y', j * chessboard.tilePixels);
+            tile.setAttribute('width', chessboard.tilePixels);
+            tile.setAttribute('height', chessboard.tilePixels);
             tile.setAttribute('fill', (i + j) % 2 === 0 ? 'white' : 'black');
             tile.classList.add('tile');
             board.appendChild(tile);
@@ -162,9 +165,7 @@ export function generateMain() {
     container.appendChild(sideContainer);
 
     // Modular call to create the chessboard graph (init: 8x8)
-    const tiles = 8;
-    const tileSize = 50;
-    generateChessboard(tiles, tileSize);
-    // Place the knight image on the board (init: P(0,1))
-    placeKnight(0, 0, tileSize);
+    generateChessboard();
+    // Place the knight image on the board)
+    placeKnight();
 }
