@@ -107,9 +107,6 @@ export function calculatePath() {
         updatePath();
         const path = knightMoves();
         if (path === null) {
-            alert(
-                'Error: Invalid Path\nYour end-coordinates are out-of-bounds! Try other ending coordinates or increase the size of the chessboard',
-            );
             return;
         }
         placeNumberedCircles(path);
