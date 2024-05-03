@@ -5,6 +5,35 @@ import logoImage from '../images/pixel_logo.png';
 import knightSVG from '../images/chess-knight.svg';
 import chessboard from './index';
 
+export function placeNumberedCircles(path) {
+    // Identify the board
+    const board = document.getElementById('chessboard-svg');
+    // Loop through the path array
+    for (let i = 0; i < path.length; i += 1) {
+        // Create the circle image
+        const circle = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'circle',
+        );
+        circle.setAttribute('cx', path[i][0] * 50 + 25);
+        circle.setAttribute('cy', path[i][1] * 50 + 25);
+        circle.setAttribute('r', 10);
+        circle.setAttribute('fill', 'red');
+        // Create the number within the circle (to denote path step)
+        const text = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'text',
+        );
+        text.setAttribute('x', path[i][0] * 50 + 25);
+        text.setAttribute('y', path[i][1] * 50 + 25);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'central');
+        text.textContent = i + 1;
+        board.appendChild(circle);
+        board.appendChild(text);
+    }
+}
+
 export function placeKnight() {
     // Initial knight placement will be 0,0
     const board = document.getElementById('chessboard-svg');
@@ -18,7 +47,10 @@ export function placeKnight() {
     knight.setAttribute('width', chessboard.tilePixels);
     knight.setAttribute('height', chessboard.tilePixels);
     // Determine the color of the square the knight is on
-    const squareColor = (chessboard.knightPosX + chessboard.knightPosY) % 2 === 0 ? 'white' : 'black';
+    const squareColor =
+        (chessboard.knightPosX + chessboard.knightPosY) % 2 === 0
+            ? 'white'
+            : 'black';
     // Apply the correct filter based on the square color
     knight.setAttribute(
         'filter',
@@ -45,7 +77,10 @@ export function generateChessboard() {
     // Prepare board SVG
     const board = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     board.setAttribute('width', chessboard.tilesPerRow * chessboard.tilePixels);
-    board.setAttribute('height', chessboard.tilesPerRow * chessboard.tilePixels);
+    board.setAttribute(
+        'height',
+        chessboard.tilesPerRow * chessboard.tilePixels,
+    );
     board.id = 'chessboard-svg';
     // Iterate through board rows
     for (let i = 0; i < chessboard.tilesPerRow; i += 1) {
